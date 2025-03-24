@@ -10,7 +10,7 @@ This guide explains how to deploy a static web application using **Nginx** and *
 ## Steps to Set Up Nginx for Static Hosting
 
 ### 1️⃣ Install Nginx
-To install Nginx on a Debian-based system:
+To install Nginx on a Linux system:
 ```yaml
 - name: Install Nginx
   apt:
@@ -84,7 +84,8 @@ Make sure the **root** directive in `nginx.conf` matches the correct directory:
 ```nginx
 server {
     listen 80;
-    server_name example.com;
+    server_name 134.199.218.137;
+    #enter the public ip of your VM 
 
     root /var/www/html/app; # 👈 Must match your deployment folder
     index index.html;
@@ -103,7 +104,6 @@ SPAs use client-side routing, so Nginx needs to always serve `index.html`:
 ```nginx
 server {
     listen 80;
-    server_name example.com;
 
     root /var/www/html/app;
     index index.html;
@@ -131,3 +131,10 @@ server {
 
 ✅ **Following these steps ensures your static site or SPA is served correctly with Nginx.**
 
+Deployment Process:
+
+Run the Ansible playbook:
+
+ansible-playbook -i inventory.ini ansible/deploy.yaml
+ 
+Ensure the correct static file is served.
