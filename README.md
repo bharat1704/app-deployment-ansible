@@ -130,11 +130,3 @@ server {
 | **8** | Add SPA routing if needed |
 
 ✅ **Following these steps ensures your static site or SPA is served correctly with Nginx.**
-
-Deployment Process:
-
-Run the Ansible playbook:
-
-ansible-playbook -i inventory.ini ansible/deploy.yaml
- 
-Ensure the correct static file is served.
