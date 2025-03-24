@@ -1,0 +1,46 @@
+---
+- name: Deploy Web Application
+  hosts: webserver
+  become: true
+  tasks:
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Create web root directory
+      file:
+        path: /var/www/html/app
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Copy application files
+      copy:
+        src: ../app/
+        dest: /var/www/html/app/
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Copy Nginx configuration
+      copy:
+        src: nginx.conf
+        dest: /etc/nginx/sites-available/app
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Enable site
+      file:
+        src: /etc/nginx/sites-available/app
+        dest: /etc/nginx/sites-enabled/app
+        state: link
+
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
